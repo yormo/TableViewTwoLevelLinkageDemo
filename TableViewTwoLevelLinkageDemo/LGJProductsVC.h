@@ -11,6 +11,7 @@
 @protocol ProductsDelegate <NSObject>
 
 - (void)selectLeftTableViewWithSection:(NSInteger)section;
+- (void)scrollViewDidEndScrollingAnimation;
 
 @end
 

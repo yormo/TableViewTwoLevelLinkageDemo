@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UITableView *categoryTableView;
 @property (nonatomic, strong) NSArray *categoryArr;
 @property (nonatomic, strong)  LGJProductsVC *productsVC;
+@property (strong, nonatomic) NSIndexPath *currentSelectIndexPath;
 
 @end
 
@@ -45,7 +46,6 @@
 }
 
 - (void)createTableView {
-    
     self.categoryTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width * 0.25, self.view.frame.size.height) style:UITableViewStylePlain];
     self.categoryTableView.delegate = self;
     self.categoryTableView.dataSource = self;
@@ -54,7 +54,6 @@
 }
 
 - (void)createProductsVC {
-    
     _productsVC = [[LGJProductsVC alloc] init];
     _productsVC.delegate = self;
     [self addChildViewController:_productsVC];
@@ -90,12 +89,23 @@
     if (_productsVC) {
         [_productsVC scrollToSelectedIndexPath:indexPath];
     }
+    self.currentSelectIndexPath = indexPath;
 }
 
 #pragma mark - ProductsDelegate
 - (void)selectLeftTableViewWithSection:(NSInteger)section {
+    if (self.currentSelectIndexPath) {
+        return;
+    }
+    
     [self.categoryTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:section inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
 }
+- (void)scrollViewDidEndScrollingAnimation {
+    if (self.currentSelectIndexPath) {
+        self.currentSelectIndexPath = nil;
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

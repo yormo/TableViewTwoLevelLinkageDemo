@@ -89,20 +89,6 @@
     return cell;
 }
 
-//- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-//
-//    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(willDisplayHeaderView:)] != _isScrollUp &&_productsTableView.isDecelerating) {
-//        [self.delegate willDisplayHeaderView:section];
-//    }
-//
-//}
-//
-//- (void)tableView:(UITableView *)tableView didEndDisplayingHeaderView:(UIView *)view forSection:(NSInteger)section {
-//
-//    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(didEndDisplayingHeaderView:)] && _isScrollUp &&_productsTableView.isDecelerating) {
-//        [self.delegate didEndDisplayingHeaderView:section];
-//    }
-//}
 
 #pragma mark - scrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -116,6 +102,11 @@
     }
 }
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    if (self.delegate != nil && [self.delegate respondsToSelector:@selector(scrollViewDidEndScrollingAnimation)]) {
+        [self.delegate scrollViewDidEndScrollingAnimation];
+    }
+}
 //- (void)selectLeftTableViewWithScrollView:(NSInteger)index {
 //
 //    [self.leftTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
